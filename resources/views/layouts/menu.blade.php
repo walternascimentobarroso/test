@@ -12,6 +12,12 @@
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('blacklist*') ? 'active' : ''}}" href="/blacklist">BlackList</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('rule*') ? 'active' : ''}}" href="/rule">Rules</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('type*') ? 'active' : ''}}" href="/type">Types</a>
+                </li>
             </ul>
         </div>
     </div>

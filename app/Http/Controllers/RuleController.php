@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Blacklist;
+use App\Models\Rule;
 use Illuminate\Http\Request;
 
-class BlacklistController extends Controller
+class RuleController extends Controller
 {
     public function index()
     {
-        $lists = Blacklist::orderBy('item')->paginate(2);
+        $lists = Rule::orderBy('item')->paginate(2);
 
         $breadcrumbs = [
             [
@@ -18,10 +18,10 @@ class BlacklistController extends Controller
             ],
             [
                 'url' => '#',
-                'name' => 'Blacklist'
+                'name' => 'Rule'
             ]
         ];
-        return view('blacklist.index', compact('lists', 'breadcrumbs'));
+        return view('rule.index', compact('lists', 'breadcrumbs'));
     }
 
     public function create()
@@ -32,26 +32,27 @@ class BlacklistController extends Controller
                 'name' => 'Home'
             ],
             [
-                'url' => '/blacklist',
-                'name' => 'Blacklist'
+                'url' => '/Rule',
+                'name' => 'Rule'
             ],
             [
                 'url' => '#',
                 'name' => 'Add Item'
             ]
         ];
-        return view('blacklist.form', compact('breadcrumbs'));
+        return view('rule.form', compact('breadcrumbs'));
     }
 
     public function store(Request $request)
     {
-        Blacklist::create($request->all());
 
-        return redirect()->route('blacklist.index')
+        Rule::create($request->all());
+
+        return redirect()->route('rule.index')
             ->with('success', 'created successfully');
     }
 
-    public function show(Blacklist $blacklist)
+    public function show(Rule $rule)
     {
         $breadcrumbs = [
             [
@@ -59,18 +60,18 @@ class BlacklistController extends Controller
                 'name' => 'Home'
             ],
             [
-                'url' => '/blacklist',
-                'name' => 'Blacklist'
+                'url' => '/rule',
+                'name' => 'Rule'
             ],
             [
                 'url' => '#',
                 'name' => 'See Item'
             ]
         ];
-        return view('blacklist.show', compact('blacklist', 'breadcrumbs'));
+        return view('rule.show', compact('rule', 'breadcrumbs'));
     }
 
-    public function edit(Blacklist $blacklist)
+    public function edit(Rule $rule)
     {
         $breadcrumbs = [
             [
@@ -78,32 +79,32 @@ class BlacklistController extends Controller
                 'name' => 'Home'
             ],
             [
-                'url' => '/blacklist',
-                'name' => 'Blacklist'
+                'url' => '/rule',
+                'name' => 'Rule'
             ],
             [
                 'url' => '#',
                 'name' => 'Edit Item'
             ]
         ];
-        return view('blacklist.edit', compact('blacklist', 'breadcrumbs'));
+        return view('rule.edit', compact('rule', 'breadcrumbs'));
     }
 
-    public function update(Blacklist $Blacklist, Request $request)
+    public function update(Rule $Rule, Request $request)
     {
         $input = (array_key_exists("active", $request->all()))
             ? $request->all()
             : array_merge($request->all(), ['active' => null]);
-        $Blacklist->update($input);
-        return redirect()->route('blacklist.index')
+        $Rule->update($input);
+        return redirect()->route('rule.index')
             ->with('success', 'List updated successfully');
     }
 
 
-    public function destroy(Blacklist $Blacklist)
+    public function destroy(Rule $Rule)
     {
-        $Blacklist->delete();
-        return redirect()->route('blacklist.index')
+        $Rule->delete();
+        return redirect()->route('rule.index')
             ->with('success', 'Item removed successfully');
     }
 }

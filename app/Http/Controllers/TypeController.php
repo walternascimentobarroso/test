@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Blacklist;
+use App\Models\Type;
 use Illuminate\Http\Request;
 
-class BlacklistController extends Controller
+class TypeController extends Controller
 {
     public function index()
     {
-        $lists = Blacklist::orderBy('item')->paginate(2);
+        $lists = Type::orderBy('item')->paginate(2);
 
         $breadcrumbs = [
             [
@@ -18,10 +18,10 @@ class BlacklistController extends Controller
             ],
             [
                 'url' => '#',
-                'name' => 'Blacklist'
+                'name' => 'Type'
             ]
         ];
-        return view('blacklist.index', compact('lists', 'breadcrumbs'));
+        return view('type.index', compact('lists', 'breadcrumbs'));
     }
 
     public function create()
@@ -32,26 +32,27 @@ class BlacklistController extends Controller
                 'name' => 'Home'
             ],
             [
-                'url' => '/blacklist',
-                'name' => 'Blacklist'
+                'url' => '/Type',
+                'name' => 'Type'
             ],
             [
                 'url' => '#',
                 'name' => 'Add Item'
             ]
         ];
-        return view('blacklist.form', compact('breadcrumbs'));
+        return view('type.form', compact('breadcrumbs'));
     }
 
     public function store(Request $request)
     {
-        Blacklist::create($request->all());
 
-        return redirect()->route('blacklist.index')
+        Type::create($request->all());
+
+        return redirect()->route('type.index')
             ->with('success', 'created successfully');
     }
 
-    public function show(Blacklist $blacklist)
+    public function show(Type $type)
     {
         $breadcrumbs = [
             [
@@ -59,18 +60,18 @@ class BlacklistController extends Controller
                 'name' => 'Home'
             ],
             [
-                'url' => '/blacklist',
-                'name' => 'Blacklist'
+                'url' => '/type',
+                'name' => 'Type'
             ],
             [
                 'url' => '#',
                 'name' => 'See Item'
             ]
         ];
-        return view('blacklist.show', compact('blacklist', 'breadcrumbs'));
+        return view('type.show', compact('type', 'breadcrumbs'));
     }
 
-    public function edit(Blacklist $blacklist)
+    public function edit(Type $type)
     {
         $breadcrumbs = [
             [
@@ -78,32 +79,32 @@ class BlacklistController extends Controller
                 'name' => 'Home'
             ],
             [
-                'url' => '/blacklist',
-                'name' => 'Blacklist'
+                'url' => '/type',
+                'name' => 'Type'
             ],
             [
                 'url' => '#',
                 'name' => 'Edit Item'
             ]
         ];
-        return view('blacklist.edit', compact('blacklist', 'breadcrumbs'));
+        return view('type.edit', compact('type', 'breadcrumbs'));
     }
 
-    public function update(Blacklist $Blacklist, Request $request)
+    public function update(Type $Type, Request $request)
     {
         $input = (array_key_exists("active", $request->all()))
             ? $request->all()
             : array_merge($request->all(), ['active' => null]);
-        $Blacklist->update($input);
-        return redirect()->route('blacklist.index')
+        $Type->update($input);
+        return redirect()->route('type.index')
             ->with('success', 'List updated successfully');
     }
 
 
-    public function destroy(Blacklist $Blacklist)
+    public function destroy(Type $Type)
     {
-        $Blacklist->delete();
-        return redirect()->route('blacklist.index')
+        $Type->delete();
+        return redirect()->route('type.index')
             ->with('success', 'Item removed successfully');
     }
 }
