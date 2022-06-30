@@ -30,7 +30,7 @@ class ValidatorController extends Controller
 
         $msg = "Success";
         $valid = true;
-
+        
         // 1º validation - email is empty
         if (!isset($email)) {
             $msg = "Please, fill the input";
@@ -51,6 +51,22 @@ class ValidatorController extends Controller
             $msg = "domain is blacklist";
             $valid = false;
         }
+
+        // TODO
+        // 4º validation - regex validation
+        // $domain = explode('@', $email);
+        // $existBlacklist = Blacklist::where('domain', $domain[1])->first();
+        // if (isset($existBlacklist)) {
+        //     $msg = "regex validation";
+        //     $valid = false;
+        // }
+        // $pattern = "'/^(\w)\1*$/u'";
+        // // dd($pattern);
+        // if(preg_match($pattern, $email)) {
+        //     dd("A match was found.");
+        // }
+        // exit;
+        
 
         Email::create([
             'email' => $email,
