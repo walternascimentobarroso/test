@@ -6,6 +6,7 @@ php artisan migrate
 php artisan make:Model Type -m
 php artisan make:Model Rule -m
 php artisan make:Model Blacklist -m
+php artisan make:Model Email -m
 
 php artisan make:migration create_types_table
 $table->string('description');

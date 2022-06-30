@@ -5,6 +5,7 @@ use App\Http\Controllers\BlacklistController;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\RuleController;
 use App\Http\Controllers\ValidatorController;
+use App\Http\Controllers\EmailController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -13,6 +14,7 @@ Route::get('/', function () {
 Route::resource('/blacklist', BlacklistController::class);
 Route::resource('/type', TypeController::class);
 Route::resource('/rule', RuleController::class);
+Route::resource('/email', EmailController::class);
 
 Route::get('/validator', [ValidatorController::class, 'index'])->name('validator.index');
 Route::post('/validator/check', [ValidatorController::class, 'check']);

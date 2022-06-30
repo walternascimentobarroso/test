@@ -13,6 +13,9 @@
                     <a class="nav-link {{ request()->is('validator*') ? 'active' : ''}}" href="/validator">Validator</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link {{ request()->is('email*') ? 'active' : ''}}" href="/email">Emails</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link {{ request()->is('blacklist*') ? 'active' : ''}}" href="/blacklist">BlackList</a>
                 </li>
                 <li class="nav-item">
