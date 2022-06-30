@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Rule;
 use App\Models\Email;
 use App\Models\Blacklist;
 
@@ -52,21 +53,20 @@ class ValidatorController extends Controller
             $valid = false;
         }
 
-        // TODO
         // 4º validation - regex validation
-        // $domain = explode('@', $email);
-        // $existBlacklist = Blacklist::where('domain', $domain[1])->first();
-        // if (isset($existBlacklist)) {
-        //     $msg = "regex validation";
-        //     $valid = false;
-        // }
-        // $pattern = "'/^(\w)\1*$/u'";
-        // // dd($pattern);
-        // if(preg_match($pattern, $email)) {
-        //     dd("A match was found.");
-        // }
-        // exit;
-        
+        $rules = Rule::whereNotNull('active')->get();
+        $allRules = [];
+        foreach ($rules as  $key => $rule) {
+            $allRules[$key]['rule'] = $rule->rule;
+            $allRules[$key]['description'] = $rule->description;
+        }
+
+        foreach ($allRules as $rule) {
+            if (preg_match($rule['rule'], $email)) {
+                $msg = $rule['description'];
+                $valid = false;
+            }
+        }
 
         Email::create([
             'email' => $email,
@@ -74,7 +74,6 @@ class ValidatorController extends Controller
             'valid' => $valid
         ]);
 
-        return redirect()->route('validator.index')
-            ->with('info', $msg);
+        return redirect()->route('validator.index')->with('info', $msg);
     }
 }
