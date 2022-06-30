@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Email;
+use App\Models\Blacklist;
 
 class ValidatorController extends Controller
 {
@@ -40,6 +41,14 @@ class ValidatorController extends Controller
         $exist = Email::where('email', $email)->first();
         if (isset($exist)) {
             $msg = "email already exist";
+            $valid = false;
+        }
+
+        // 3º validation - domain is blacklist
+        $domain = explode('@', $email);
+        $existBlacklist = Blacklist::where('domain', $domain[1])->first();
+        if (isset($existBlacklist)) {
+            $msg = "domain is blacklist";
             $valid = false;
         }
 
