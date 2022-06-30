@@ -18,5 +18,5 @@ php artisan serve
 <img src="./screenshot/blacklist.png">
 
 ## Email
-<img src="./screenshot/email.png">
+<img src="./screenshot/emails.png">
 
